@@ -16,8 +16,10 @@ def get_info(source):
                 # f.write(str(i) + "\n\n")
                 ret.append({"number" : spans[1].text, "time" : spans[2].strong.text, "Direction" : spans[2].find_all('strong')[1].text})
             f.write(json.dumps(ret, indent=4))
+        return ret
     else:
         print("probleme page")
+        return False
 
 
 if __name__ == "__main__":
@@ -27,7 +29,9 @@ if __name__ == "__main__":
     
     with open("stops.json", "r") as f:
         stops = json.loads(f.read())
-        page = requests.get(stops["ALERY BANQUE DE FRANCE"]).text
-    # for i in range(10):
-    #     driver.refresh()
-    get_info(page)
+        res = input("quelle arrêt souhaitez vous (pour la liste des arrêts entrer '?')")
+        if res == "?":
+            print(stops.keys())
+            res = input(":")
+        page = requests.get(stops[res])
+    print(get_info(page.text))
