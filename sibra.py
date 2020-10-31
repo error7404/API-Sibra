@@ -18,7 +18,7 @@ def get_info(source):
             f.write(json.dumps(ret, indent=4))
         return ret
     else:
-        print("probleme page")
+        print(soup.find("div", class_ = "content").h2.text)
         return False
 
 
